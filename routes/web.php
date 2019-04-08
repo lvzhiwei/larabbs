@@ -16,4 +16,6 @@ Route::get('/help', 'StaticPagesController@help')->name('help'); // 帮助
 Route::get('/about', 'StaticPagesController@about')->name('about'); // 关于
 
 Route::get('signup', 'UsersController@create')->name('signup'); // 注册表单
-//Route::get('register', 'UsersController@create')->name('create'); //
+Route::resource('users', 'UsersController'); //资源路由, 包含了隐式路由绑定
+
+
