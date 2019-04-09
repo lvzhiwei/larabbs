@@ -23,7 +23,7 @@ class SessionController extends Controller
             'password' => 'required',
         ]);
 
-        if (Auth::attempt($credentials))
+        if (Auth::attempt($credentials, $request->has('remember')))
         {
             // 登录成功的相关操作
             session()->flash('success', '欢迎回来!');
@@ -39,6 +39,7 @@ class SessionController extends Controller
     public function destroy()
     {
         Auth::logout();
-        return redirect()->route('/');
+        session()->flash('success', '您已成功退出!');
+        return redirect('/');
     }
 }

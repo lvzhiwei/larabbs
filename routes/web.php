@@ -21,6 +21,6 @@ Route::resource('users', 'UsersController'); //资源路由, 包含了隐式路�
 // Session 控制器
 Route::get('login', 'SessionController@create')->name('login'); //登录表单
 Route::post('login', 'SessionController@store')->name('login'); //创建新会话 (登录)
-Route::post('logout', 'SessionController@destroy')->name('logout'); //销毁会话 (退出登录)
+Route::delete('logout', 'SessionController@destroy')->name('logout'); //销毁会话 (退出登录)
 
 
