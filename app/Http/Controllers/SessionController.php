@@ -34,4 +34,11 @@ class SessionController extends Controller
             return redirect()->back()->withInput();
         }
     }
+
+    // 退出登录
+    public function destroy()
+    {
+        Auth::logout();
+        return redirect()->route('/');
+    }
 }
