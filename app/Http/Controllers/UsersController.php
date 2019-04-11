@@ -39,4 +39,10 @@ class UsersController extends Controller
         session()->flash('success', '欢迎, 您将在这里开启一段新的旅程~');
         return redirect()->route('users.show', [$user]);
     }
+
+    // 用户编辑表单
+    public function edit(User $user)
+    {
+        return view('user.edit', compact('user'));
+    }
 }
