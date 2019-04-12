@@ -8,6 +8,19 @@ use Illuminate\Support\Facades\Auth;
 
 class UsersController extends Controller
 {
+    // 构造方法进行中间件校验
+    public function __construct()
+    {
+        $this->middleware('auth', [
+            'except' => ['show', 'create', 'store']
+        ]);
+
+        // 只让未登录用户访问注册页面
+        $this->middleware('guest', [
+            'only' => ['create']
+        ]);
+    }
+
     // 注册表单
     public function create()
     {
@@ -43,12 +56,14 @@ class UsersController extends Controller
     // 用户编辑表单
     public function edit(User $user)
     {
+        $this->authorize('is_owner', $user);
         return view('users.edit', compact('user'));
     }
 
     // 更新用户信息
     public function update(User $user, Request $request)
     {
+        $this->authorize('is_owner', $user);
         $this->validate($request, [
             'name' => 'required|max:50',
             'password' => 'nullable|confirmed|min:6',

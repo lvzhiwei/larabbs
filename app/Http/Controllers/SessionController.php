@@ -9,6 +9,14 @@ use Illuminate\Support\Facades\DB;
 
 class SessionController extends Controller
 {
+    // 中间件限制登录用户
+    public function __construct()
+    {
+        $this->middleware('guest', [
+            'only' => ['create']
+        ]);
+    }
+
     // 登录表单
     public function create()
     {
@@ -27,7 +35,8 @@ class SessionController extends Controller
         {
             // 登录成功的相关操作
             session()->flash('success', '欢迎回来!');
-            return redirect()->route('users.show', [Auth::user()]);
+            $fallback = route('users.show', Auth::user());
+            return redirect()->intended($fallback);
         } else {
             // 登录失败的相关操作
             session()->flash('danger', '很抱歉, 您的邮箱和密码不匹配');
